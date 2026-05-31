@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nikesh Suthar | Software Engineer[cite: 1]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Developer Theme Variables */
+        :root {
+            --bg-main: #050505;
+            --bg-surface: #111111;
+            --bg-surface-hover: #1a1a1a;
+            --text-primary: #ededed;
+            --text-secondary: #888888;
+            --accent: #00ffcc; /* Cyberpunk Cyan */
+            --accent-glow: rgba(0, 255, 204, 0.2);
+            --border: #222222;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #112222 0%, transparent 50%);
+        }
+
+        /* Glassmorphism Navigation (Desktop) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-btn:hover, .nav-btn.active { color: var(--accent); }
+        .nav-btn.active::after { width: 100%; }
+
+        /* SPA Container */
+        .page-container {
+            margin-top: 100px;
+            padding: 2rem 5%;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 80vh;
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .page.active {
+            display: block;
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        h1 { font-size: 4rem; letter-spacing: -0.05em; line-height: 1.1; margin-bottom: 1rem; }
+        h2 { font-size: 2.5rem; letter-spacing: -0.03em; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+        h2::after { content: ''; flex-grow: 1; height: 1px; background: var(--border); }
+        h3 { font-size: 1.4rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+
+        /* --- PAGE 1: Home (Terminal UI) --- */
+        .hero { display: flex; flex-direction: column; justify-content: center; min-height: 70vh; gap: 2rem; }
+        
+        .terminal-window {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            max-width: 700px;
+        }
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 10px 15px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .term-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        .prompt { color: var(--accent); margin-right: 10px; }
+        .command { color: #fff; }
+        .output { color: #a8b2d1; margin-top: 10px; margin-bottom: 20px; line-height: 1.8; }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--accent);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+        .btn {
+            font-family: var(--font-mono);
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary { background: rgba(0, 255, 204, 0.1); color: var(--accent); border: 1px solid var(--accent); }
+        .btn-primary:hover { background: var(--accent); color: var(--bg-main); box-shadow: 0 0 20px var(--accent-glow); }
+        .btn-secondary { background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--text-secondary); background: var(--bg-surface-hover); }
+
+        /* --- PAGE 2: Skills --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .skill-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px var(--accent-glow);
+            transform: translateY(-5px);
+        }
+        .skill-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .skill-card:hover::before { opacity: 1; }
+        
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
+        .tag {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: var(--text-primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            transition: all 0.2s;
+        }
+        .skill-card:hover .tag { border-color: rgba(0, 255, 204, 0.3); color: var(--accent); }
+
+        /* --- PAGE 3: Experience --- */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0; width: 2px;
+            background: var(--border);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.4rem;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-main);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .timeline-item:hover::before {
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+        .job-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1rem; }
+        .company { font-family: var(--font-mono); color: var(--accent); font-size: 1.1rem; }
+        .date { color: var(--text-secondary); font-size: 0.9rem; font-family: var(--font-mono); }
+        .achievements { list-style-type: none; }
+        .achievements li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #b3b3b3;
+        }
+        .achievements li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.2rem;
+            top: -2px;
+        }
+
+        /* --- PAGE 4: Projects --- */
+        .project-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            transition: all 0.4s ease;
+        }
+        .project-card:hover {
+            border-color: var(--text-secondary);
+        }
+        .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .project-icon { font-size: 2rem; color: var(--accent); }
+
+        /* ========================================================
+           MOBILE APP RESPONSIVE STYLES (Max Width: 768px)
+           ======================================================== */
+        @media (max-width: 768px) {
+            
+            /* App-like Top Bar */
+            nav {
+                justify-content: center; /* Center the logo */
+                padding: 1rem;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+                border-bottom: none;
+            }
+            .logo { font-size: 1.3rem; }
+            
+            /* App-like Bottom Navigation Tab Bar */
+            .nav-links {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: rgba(17, 17, 17, 0.95);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border-top: 1px solid var(--border);
+                padding: 0.8rem 0;
+                padding-bottom: calc(0.8rem + env(safe-area-inset-bottom)); /* iOS edge-to-edge support */
+                justify-content: space-evenly;
+                gap: 0;
+                z-index: 1000;
+            }
+            .nav-btn {
+                font-size: 0.75rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            .nav-num { display: none; } /* Hide numbers on mobile to save space */
+            .nav-btn::after { display: none; } /* Remove desktop underline */
+            .nav-btn.active { color: var(--accent); }
+            /* Mobile active indicator (top dot) */
+            .nav-btn.active::before {
+                content: '';
+                position: absolute;
+                top: -10px;
+                width: 4px;
+                height: 4px;
+                background: var(--accent);
+                border-radius: 50%;
+                box-shadow: 0 0 8px var(--accent);
+            }
+
+            /* Adjust Container Spacing for Fixed Bars */
+            .page-container {
+                margin-top: 70px;
+                margin-bottom: 80px; /* Space for bottom nav */
+                padding: 1.5rem 5%;
+                min-height: calc(100vh - 150px);
+            }
+
+            /* Responsive Typography */
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            
+            /* Terminal Layout */
+            .hero { min-height: auto; margin-top: 2rem; gap: 1.5rem; }
+            .terminal-body { font-size: 0.85rem; padding: 1rem; }
+            
+            /* Touch-Friendly Full-Width Buttons */
+            .social-links { flex-direction: column; width: 100%; gap: 0.8rem; }
+            .btn { width: 100%; }
+
+            /* Skills Grid Single Column */
+            .skills-grid { grid-template-columns: 1fr; }
+            .skill-card { padding: 1.5rem; }
+
+            /* Compressed Timeline */
+            .timeline { padding-left: 1.5rem; }
+            .timeline-item::before { left: -1.95rem; width: 12px; height: 12px; }
+            .job-header { flex-direction: column; gap: 0.3rem; }
+            .date { margin-top: 0.2rem; }
+            .achievements li { font-size: 0.95rem; }
+
+            /* Projects Card Adjustments */
+            .project-card { padding: 1.5rem; }
+            .project-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .project-icon { align-self: flex-end; margin-top: -2.5rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo" onclick="navigateTo('home')">Nikesh<span>.dev</span>[cite: 1]</div>
+        <div class="nav-links">
+            <button class="nav-btn active" data-target="home"><span class="nav-num">01. </span>Home</button>
+            <button class="nav-btn" data-target="skills"><span class="nav-num">02. </span>Skills</button>
+            <button class="nav-btn" data-target="experience"><span class="nav-num">03. </span>Experience</button>
+            <button class="nav-btn" data-target="projects"><span class="nav-num">04. </span>Projects</button>
+        </div>
+    </nav>
+
+    <div class="page-container">
+
+        <!-- PAGE 1: HOME -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="term-dot dot-red"></div>
+                        <div class="term-dot dot-yellow"></div>
+                        <div class="term-dot dot-green"></div>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt">guest@portfolio:~$</span> <span class="command">whoami</span></p>
+                        <p class="output">Nikesh Suthar[cite: 1]</p>
+
+                        <p><span class="prompt">guest@portfolio:~$</span> <span class="command">cat summary.txt</span></p>
+                        <p class="output" id="typewriter-text"></p>
+                        
+                        <p><span class="prompt">guest@portfolio:~$</span><span class="cursor"></span></p>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="mailto:sutharnikesh532@gmail.com" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Email Me[cite: 1]
+                    </a>
+                    <a href="https://linkedin.com/in/nikesh532" target="_blank" class="btn btn-secondary">LinkedIn[cite: 1]</a>
+                    <a href="https://github.com/Nikesh559" target="_blank" class="btn btn-secondary">GitHub[cite: 1]</a>
+                    <a href="https://leetcode.com/NikleetCode" target="_blank" class="btn btn-secondary">LeetCode[cite: 1]</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: SKILLS -->
+        <section id="skills" class="page">
+            <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">02.</span> Tech Stack</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Languages & Frameworks[cite: 1]</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Core application logic and backend architecture.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Hibernate</span>[cite: 1]
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>Distributed Systems[cite: 1]</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">High-throughput data pipelines and microservices.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Kafka</span><span class="tag">gRPC</span><span class="tag">REST</span>[cite: 1]
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Databases[cite: 1]</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Relational, NoSQL, and In-Memory stores.</p>
+                    <div class="skill-tags">
+                        <span class="tag">PostgreSQL</span><span class="tag">Cassandra</span><span class="tag">Redis</span>[cite: 1]
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Cloud & DevOps[cite: 1]</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Infrastructure, containerization, and orchestration.</p>
+                    <div class="skill-tags">
+                        <span class="tag">GCP</span><span class="tag">Docker</span><span class="tag">Kubernetes</span>[cite: 1]
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <h3>Observability[cite: 1]</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">System monitoring and log aggregation.</p>
+                    <div class="skill-tags">
+                        <span class="tag">New Relic</span><span class="tag">Grafana</span><span class="tag">Splunk</span><span class="tag">Coralogix</span>[cite: 1]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: EXPERIENCE -->
+        <section id="experience" class="page">
+            <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">03.</span> Where I've Worked</h2>
+            
+            <div class="timeline">
+                <!-- Priceline -->
+                <div class="timeline-item">
+                    <div class="job-header">
+                        <div>
+                            <h3>Software Engineer[cite: 1]</h3>
+                            <p class="company">@ Priceline[cite: 1]</p>
+                        </div>
+                        <span class="date">Jan 2024 - Present[cite: 1]</span>
+                    </div>
+                    <ul class="achievements">
+                        <li>Architected and implemented a high-throughput Kafka streaming pipeline processing 1.8TB/day to ingest Parquet-formatted files into Google Cloud Storage with exactly-once guarantees.[cite: 1]</li>
+                        <li>Owned the end-to-end implementation and scaling of gRPC-based reference data services, handling over 225,000 daily requests ensuring high availability.[cite: 1]</li>
+                        <li>Developed a scheduler service leveraging Spring AOP and batch processing to synchronize records to Alloy DB (PostgreSQL) with a max throughput of 13k records/sec.[cite: 1]</li>
+                        <li>Spearheaded a Kafka-based logging pipeline into Coralogix to assess migration impact from Splunk for high-throughput topics (2 MB/s).[cite: 1]</li>
+                        <li>Optimized database efficiency via Hibernate Level 2 caching, reducing P95/P99 tail latencies by 20%.[cite: 1]</li>
+                        <li>Built a custom Q&A Bot Glean LLM agent for Slack, reducing manual developer support effort by 60%.[cite: 1]</li>
+                    </ul>
+                </div>
+
+                <!-- JPMC -->
+                <div class="timeline-item">
+                    <div class="job-header">
+                        <div>
+                            <h3>Software Engineer[cite: 1]</h3>
+                            <p class="company">@ JPMorgan Chase & Co.[cite: 1]</p>
+                        </div>
+                        <span class="date">Jul 2021 - Jan 2024[cite: 1]</span>
+                    </div>
+                    <ul class="achievements">
+                        <li>Developed a scheduler service to fully automate End-of-Day (EOD) transaction settlement for loan booking, completely eliminating manual processing errors (100% reduction).[cite: 1]</li>
+                        <li>Integrated DocuSign into the client onboarding application, reducing document turnaround time by 93% (from 14 days to same-day completion).[cite: 1]</li>
+                        <li>Designed and implemented secure client authentication and authorization using OAuth 2.0, protecting REST APIs with token-based access control.[cite: 1]</li>
+                        <li>Refactored core services to add user activity auditing, creating immutable audit trails to support compliance and traceability.[cite: 1]</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: PROJECTS -->
+        <section id="projects" class="page">
+            <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">04.</span> Featured Build</h2>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Pixels: Semantic Image Search[cite: 1]</h3>
+                    <a href="https://github.com/Nikesh559/pixels" target="_blank" class="project-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </a>
+                </div>
+                
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    An event-driven search platform that understands natural language, allowing users to search images using complex descriptions instead of strict keywords.[cite: 1]
+                </p>
+                
+                <ul class="achievements" style="margin-bottom: 2rem;">
+                    <li>Built a Kafka pipeline to handle image uploads, instantly saving raw files to MinIO Object Storage to keep the main application fast.[cite: 1]</li>
+                    <li>Routed image data asynchronously to AI workers, which analyze the images using the CLIP model.[cite: 1]</li>
+                    <li>Saved embeddings into Qdrant (Vector Database) for smart, high-speed semantic search execution.[cite: 1]</li>
+                </ul>
+
+                <div class="skill-tags">
+                    <span class="tag">Kafka</span>
+                    <span class="tag">AI / CLIP Model</span>
+                    <span class="tag">Qdrant Vector DB</span>
+                    <span class="tag">MinIO Object Storage</span>[cite: 1]
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // --- 1. Typewriter Effect for Terminal ---
+        const textToType = "I am a Mid Level Software Engineer specializing in distributed systems, high-throughput Kafka pipelines, and backend architecture. Currently building at Priceline.[cite: 1]";
+        const typewriterElement = document.getElementById('typewriter-text');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < textToType.length) {
+                typewriterElement.innerHTML += textToType.charAt(index);
+                index++;
+                setTimeout(typeWriter, 20); // typing speed
+            }
+        }
+        
+        // Start typing after a short delay
+        setTimeout(typeWriter, 800);
+
+        // --- 2. SPA Navigation Logic ---
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const pages = document.querySelectorAll('.page');
+
+        function navigateTo(targetId) {
+            // Remove active classes
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Force reflow to restart CSS animations
+            void document.getElementById(targetId).offsetWidth;
+
+            // Add active class to target page
+            document.getElementById(targetId).classList.add('active');
+            
+            // Highlight the correct nav button
+            const targetBtn = document.querySelector(`.nav-btn[data-target="${targetId}"]`);
+            if (targetBtn) targetBtn.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Ensure click on span inside button targets the button's data attribute
+                const targetBtn = e.target.closest('.nav-btn');
+                if(targetBtn) {
+                    const targetId = targetBtn.getAttribute('data-target');
+                    navigateTo(targetId);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
