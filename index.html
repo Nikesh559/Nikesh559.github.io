@@ -683,6 +683,7 @@
         <section id="projects" class="page">
             <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">05.</span> Featured Build</h2>
             
+            <!-- Pixels Project -->
             <div class="project-card">
                 <div class="project-header">
                     <h3>Pixels: Semantic Image Search</h3>
@@ -692,20 +693,149 @@
                 </div>
                 
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-                    An event-driven search platform that understands natural language, allowing users to search images using complex descriptions instead of strict keywords.
+                    A high-throughput, event-driven search platform that replaces traditional keyword matching with Natural Language Processing (NLP). By leveraging local multimodal LLMs and vector databases, it allows users to search image libraries using descriptive queries (e.g., "A sunset over a futuristic city") rather than static tags.
                 </p>
                 
                 <ul class="achievements-list" style="margin-bottom: 2rem;">
-                    <li>Built a Kafka pipeline to handle image uploads, instantly saving raw files to MinIO Object Storage to keep the main application fast.</li>
-                    <li>Routed image data asynchronously to AI workers, which analyze the images using the CLIP model.</li>
-                    <li>Saved embeddings into Qdrant (Vector Database) for smart, high-speed semantic search execution.</li>
+                    <li>Built a decoupled, scalable pipeline that separates image storage from compute-intensive AI tasks.</li>
+                    <li>Managed the processing queue by publishing upload events to Apache Kafka and storing raw images in MinIO.</li>
+                    <li>Automated the generation of high-dimensional vector embeddings using a worker node equipped with the CLIP vision model.</li>
+                    <li>Indexed vector embeddings in Qdrant for sub-second similarity searches, while storing relational metadata and file references in PostgreSQL.</li>
+                </ul>
+
+                <!-- Project Images -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.9rem;">Web Interface</h4>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <img src="https://raw.githubusercontent.com/Nikesh559/pixels/refs/heads/main/screenshots/ss6.png" alt="Pixels Web Page Interface" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                        <img src="https://raw.githubusercontent.com/Nikesh559/pixels/refs/heads/main/screenshots/ss4.png" alt="Pixels Search Results" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                    </div>
+                </div>
+
+                <div class="skill-tags">
+                    <span class="tag">Python 3.11+</span>
+                    <span class="tag">CLIP Model</span>
+                    <span class="tag">Apache Kafka</span>
+                    <span class="tag">Qdrant</span>
+                    <span class="tag">PostgreSQL</span>
+                    <span class="tag">MinIO</span>
+                    <span class="tag">Docker</span>
+                </div>
+            </div>
+            <!-- Ecommerce Application Project -->
+            <div class="project-card" style="margin-top: 2rem;">
+                <div class="project-header">
+                    <h3>Microservice-Based Ecommerce Application</h3>
+                    <!-- E-commerce / Shopping Bag Icon -->
+                    <div class="project-icon">
+                        <a href="https://github.com/Nikesh559/Ecommerce-Application" target="_blank" class="project-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    A Microservice-Based Ecommerce Application with functionality to search products, add to cart, checkout, and track the shipment.
+                </p>
+                
+                <ul class="achievements-list" style="margin-bottom: 2rem;">
+                    <li>Architected independent microservices for Products, Shopping Cart, and Orders utilizing Java, Spring Boot, and Spring Data JPA.</li>
+                    <li>Integrated Netflix Eureka for Service Discovery, enabling automatic detection and load balancing of registered microservices.</li>
+                    <li>Centralized distributed system configurations using Spring Cloud Config Server connected to a Git repository.</li>
+                    <li>Implemented fault tolerance and prevented cascading network failures by applying the Circuit Breaker pattern (CLOSED, OPEN, HALF_OPEN) with Resilience4j.</li>
+                </ul>
+
+                <!-- Project Images -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="margin-bottom: 1rem;">Architecture Diagram</h4>
+                    <img src="https://user-images.githubusercontent.com/59741887/193088250-e46a017b-0670-4a2e-bb6f-5d44506ec3f6.png" alt="Project Architecture Diagram" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Eureka Dashboard</h4>
+                        <img src="https://user-images.githubusercontent.com/59741887/193081538-c5507ade-d0e6-4541-a3ad-b946dd0ae7d8.PNG" alt="Netflix Eureka Dashboard" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Resilience4j Actuator Health</h4>
+                        <img src="https://user-images.githubusercontent.com/59741887/193087145-b03aa191-b9ef-4e39-bc3d-cd3115989fc7.PNG" alt="Resilience4j Circuit Breaker Endpoint" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+                    </div>
+                </div>
+
+                <div class="skill-tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">Spring Boot</span>
+                    <span class="tag">Spring Data JPA</span>
+                    <span class="tag">Netflix Eureka</span>
+                    <span class="tag">Resilience4j</span>
+                    <span class="tag">Spring Config Server</span>
+                </div>
+            </div>
+            <!-- QuickFoodie Project -->
+            <div class="project-card" style="margin-top: 2rem;">
+                <div class="project-header">
+                    <h3>QuickFoodie: Backend Food Ordering Platform</h3>
+                    <!-- Location / Delivery Pin Icon -->
+
+                    <div class="project-icon">
+                        <a href="https://github.com/Nikesh559/QuickFoodie" target="_blank" class="project-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </a>
+                    </div>
+                </div>
+                
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    A fully functional Java backend built for a food ordering platform, designed to manage high-efficiency operations including location-aware searches, cart operations, and session management.
+                </p>
+                
+                <ul class="achievements-list" style="margin-bottom: 2rem;">
+                    <li>Engineered a robust backend architecture using Java and Spring Boot, utilizing Spring Data for seamless MongoDB access.</li>
+                    <li>Implemented high-performance API caching mechanisms via Redis to optimize read speeds and reduce database workloads.</li>
+                    <li>Leveraged MongoDB geospatial data indexing to compute real-time location parameters, enabling users to fetch nearest restaurants and delivery executives within a strict 5 km radius.</li>
+                    <li>Designed secure user authentication pipelines and stateless session management handlers using Spring Security and JSON Web Tokens (JWT).</li>
                 </ul>
 
                 <div class="skill-tags">
-                    <span class="tag">Kafka</span>
-                    <span class="tag">AI / CLIP Model</span>
-                    <span class="tag">Qdrant Vector DB</span>
-                    <span class="tag">MinIO Object Storage</span>
+                    <span class="tag">Java</span>
+                    <span class="tag">Spring Boot</span>
+                    <span class="tag">Spring Data</span>
+                    <span class="tag">Spring Security</span>
+                    <span class="tag">MongoDB</span>
+                    <span class="tag">Redis</span>
+                    <span class="tag">Jackson</span>
+                </div>
+            </div>
+            <div class="project-card" style="margin-top: 2rem;">
+                <div class="project-header">
+                    <h3>Rental Ride: Microservices Car Rental Platform</h3>
+                    <a href="https://github.com/Nikesh559/Rental-Ride" target="_blank" class="project-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="22" height="13" rx="2" ry="2"></rect><path d="M7 21h0a1 1 0 0 1-1-1v-2h12v2a1 1 0 0 1-1 1h0"></path><path d="M16 11h.01"></path><path d="M8 11h.01"></path></svg>
+                    </a>
+                </div>
+                
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    A distributed car rental application featuring dedicated microservices for customer management, booking exploration, and granular administrative logging.
+                </p>
+                
+                <ul class="achievements-list" style="margin-bottom: 2rem;">
+                    <li>Architected a microservices layout built on Java and Spring Boot, leveraging Netflix Eureka for seamless decentralized service discovery.</li>
+                    <li>Integrated a Spring Cloud API Gateway to handle dynamic endpoint routing, request filtering, and unified edge security protocols.</li>
+                    <li>Designed an enterprise authentication suite combining Spring Security and stateless JSON Web Tokens (JWT) with BCrypt cryptography for secure password hashing.</li>
+                    <li>Constructed decoupled Customer and Booking engines facilitating role-based permissions (User/Admin) to audit car utilization histories and user logs.</li>
+                </ul>
+
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.9rem;">System Architecture</h4>
+                    <img src="https://user-images.githubusercontent.com/59741887/200380408-9a9fa591-3765-41b7-a86c-9e9615662382.PNG" alt="Rental Ride Architecture Diagram" style="max-width: 100%; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.5);" />
+                </div>
+
+                <div class="skill-tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">Spring Boot</span>
+                    <span class="tag">Spring Security</span>
+                    <span class="tag">API Gateway</span>
+                    <span class="tag">Netflix Eureka</span>
+                    <span class="tag">JWT Authentication</span>
                 </div>
             </div>
         </section>
