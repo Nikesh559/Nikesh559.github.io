@@ -61,13 +61,13 @@
         }
         .logo span { color: var(--accent); }
 
-        .nav-links { display: flex; gap: 2rem; }
+        .nav-links { display: flex; gap: 1.5rem; }
         .nav-btn {
             background: none;
             border: none;
             color: var(--text-secondary);
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
@@ -114,9 +114,10 @@
         h2 { font-size: 2.5rem; letter-spacing: -0.03em; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
         h2::after { content: ''; flex-grow: 1; height: 1px; background: var(--border); }
         h3 { font-size: 1.4rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+        h4 { font-size: 1.1rem; color: var(--text-primary); font-weight: 600; margin-bottom: 0.2rem; }
 
-        /* --- PAGE 1: Home (Terminal UI) --- */
-        .hero { display: flex; flex-direction: column; justify-content: center; min-height: 70vh; gap: 2rem; }
+        /* --- PAGE 1: Home (Terminal UI & DSA) --- */
+        .hero { display: flex; flex-direction: column; justify-content: center; min-height: 60vh; gap: 2rem; }
         
         .terminal-window {
             background: var(--bg-surface);
@@ -176,10 +177,10 @@
         .btn-secondary { background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border); }
         .btn-secondary:hover { border-color: var(--text-secondary); background: var(--bg-surface-hover); }
 
-        /* --- PAGE 2: Skills --- */
-        .skills-grid {
+        /* --- Global Grid & Cards --- */
+        .skills-grid, .achievements-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
         }
         .skill-card {
@@ -216,10 +217,27 @@
         }
         .skill-card:hover .tag { border-color: rgba(0, 255, 204, 0.3); color: var(--accent); }
 
+        .achievements-list { list-style-type: none; }
+        .achievements-list li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #b3b3b3;
+        }
+        .achievements-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.2rem;
+            top: -2px;
+        }
+
         /* --- PAGE 3: Experience --- */
         .timeline {
             position: relative;
             padding-left: 3rem;
+            margin-bottom: 4rem;
         }
         .timeline::before {
             content: '';
@@ -231,6 +249,8 @@
             position: relative;
             margin-bottom: 4rem;
         }
+        .timeline-item:last-child { margin-bottom: 0; }
+        
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -250,23 +270,44 @@
         .job-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1rem; }
         .company { font-family: var(--font-mono); color: var(--accent); font-size: 1.1rem; }
         .date { color: var(--text-secondary); font-size: 0.9rem; font-family: var(--font-mono); }
-        .achievements { list-style-type: none; }
-        .achievements li {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-            position: relative;
-            color: #b3b3b3;
+
+        /* --- PAGE 4: Achievements & Certs --- */
+        .ach-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
         }
-        .achievements li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
+        .ach-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        .ach-icon {
+            font-size: 1.8rem;
             color: var(--accent);
-            font-size: 1.2rem;
-            top: -2px;
+            background: rgba(0, 255, 204, 0.08);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            flex-shrink: 0;
+        }
+        .ach-details p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            margin-top: 0.3rem;
         }
 
-        /* --- PAGE 4: Projects --- */
+        /* --- PAGE 5: Projects --- */
         .project-card {
             background: var(--bg-surface);
             border: 1px solid var(--border);
@@ -274,9 +315,7 @@
             padding: 3rem;
             transition: all 0.4s ease;
         }
-        .project-card:hover {
-            border-color: var(--text-secondary);
-        }
+        .project-card:hover { border-color: var(--text-secondary); }
         .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .project-icon { font-size: 2rem; color: var(--accent); }
 
@@ -285,16 +324,14 @@
            ======================================================== */
         @media (max-width: 768px) {
             
-            /* App-like Top Bar */
             nav {
-                justify-content: center; /* Center the logo */
+                justify-content: center;
                 padding: 1rem;
                 box-shadow: 0 4px 10px rgba(0,0,0,0.5);
                 border-bottom: none;
             }
             .logo { font-size: 1.3rem; }
             
-            /* App-like Bottom Navigation Tab Bar */
             .nav-links {
                 position: fixed;
                 bottom: 0;
@@ -304,27 +341,27 @@
                 backdrop-filter: blur(15px);
                 -webkit-backdrop-filter: blur(15px);
                 border-top: 1px solid var(--border);
-                padding: 0.8rem 0;
-                padding-bottom: calc(0.8rem + env(safe-area-inset-bottom)); /* iOS edge-to-edge support */
-                justify-content: space-evenly;
+                padding: 0.8rem 0.5rem;
+                padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+                justify-content: space-between;
                 gap: 0;
                 z-index: 1000;
             }
             .nav-btn {
-                font-size: 0.75rem;
+                font-size: 0.65rem; /* Adjusted for 5 tabs */
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 4px;
+                padding: 0 5px;
             }
-            .nav-num { display: none; } /* Hide numbers on mobile to save space */
-            .nav-btn::after { display: none; } /* Remove desktop underline */
+            .nav-num { display: none; }
+            .nav-btn::after { display: none; }
             .nav-btn.active { color: var(--accent); }
-            /* Mobile active indicator (top dot) */
             .nav-btn.active::before {
                 content: '';
                 position: absolute;
-                top: -10px;
+                top: -8px;
                 width: 4px;
                 height: 4px;
                 background: var(--accent);
@@ -332,43 +369,38 @@
                 box-shadow: 0 0 8px var(--accent);
             }
 
-            /* Adjust Container Spacing for Fixed Bars */
             .page-container {
                 margin-top: 70px;
-                margin-bottom: 80px; /* Space for bottom nav */
+                margin-bottom: 80px; 
                 padding: 1.5rem 5%;
                 min-height: calc(100vh - 150px);
             }
 
-            /* Responsive Typography */
             h1 { font-size: 2.5rem; }
-            h2 { font-size: 1.8rem; }
+            h2 { font-size: 1.6rem; }
+            h4 { font-size: 1rem; }
             
-            /* Terminal Layout */
-            .hero { min-height: auto; margin-top: 2rem; gap: 1.5rem; }
+            .hero { min-height: auto; margin-top: 1rem; gap: 1.5rem; }
             .terminal-body { font-size: 0.85rem; padding: 1rem; }
             
-            /* Touch-Friendly Full-Width Buttons */
             .social-links { flex-direction: column; width: 100%; gap: 0.8rem; }
             .btn { width: 100%; }
 
-            /* Skills Grid Single Column */
-            .skills-grid { grid-template-columns: 1fr; }
-            .skill-card { padding: 1.5rem; }
+            .skills-grid, .achievements-grid { grid-template-columns: 1fr; }
+            .skill-card, .ach-card { padding: 1.5rem; }
+            .ach-card { flex-direction: column; text-align: center; gap: 1rem; }
+            .ach-icon { width: 50px; height: 50px; font-size: 1.5rem; }
 
-            /* Compressed Timeline */
-            .timeline { padding-left: 1.5rem; }
+            .timeline { padding-left: 1.5rem; margin-bottom: 3rem; }
             .timeline-item::before { left: -1.95rem; width: 12px; height: 12px; }
             .job-header { flex-direction: column; gap: 0.3rem; }
             .date { margin-top: 0.2rem; }
-            .achievements li { font-size: 0.95rem; }
+            .achievements-list li { font-size: 0.95rem; }
 
-            /* Projects Card Adjustments */
             .project-card { padding: 1.5rem; }
             .project-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
             .project-icon { align-self: flex-end; margin-top: -2.5rem; }
         }
-
     </style>
 </head>
 <body>
@@ -380,13 +412,14 @@
             <button class="nav-btn active" data-target="home"><span class="nav-num">01. </span>Home</button>
             <button class="nav-btn" data-target="skills"><span class="nav-num">02. </span>Skills</button>
             <button class="nav-btn" data-target="experience"><span class="nav-num">03. </span>Experience</button>
-            <button class="nav-btn" data-target="projects"><span class="nav-num">04. </span>Projects</button>
+            <button class="nav-btn" data-target="achievements"><span class="nav-num">04. </span>Awards</button>
+            <button class="nav-btn" data-target="projects"><span class="nav-num">05. </span>Projects</button>
         </div>
     </nav>
 
     <div class="page-container">
 
-        <!-- PAGE 1: HOME -->
+        <!-- PAGE 1: HOME (Terminal + DSA Info) -->
         <section id="home" class="page active">
             <div class="hero">
                 <div class="terminal-window">
@@ -414,6 +447,93 @@
                     <a href="https://linkedin.com/in/nikesh532" target="_blank" class="btn btn-secondary">LinkedIn</a>
                     <a href="https://github.com/Nikesh559" target="_blank" class="btn btn-secondary">GitHub</a>
                     <a href="https://leetcode.com/NikleetCode" target="_blank" class="btn btn-secondary">LeetCode</a>
+                    <a href="https://www.geeksforgeeks.org/profile/nikeshsuthar" target="_blank" class="btn btn-secondary">GeeksforGeeks</a>
+                    <a href="https://www.hackerearth.com/@nikesh63/" target="_blank" class="btn btn-secondary">HackerEarth</a>
+                    <a href="https://www.codechef.com/users/nikesh_s" target="_blank" class="btn btn-secondary">CodeChef</a>
+                </div>
+            </div>
+
+            <!-- DSA Section directly on Home Page -->
+            <div style="margin-top: 5rem;">
+                <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">+</span> DSA & Competitive Programming</h2>
+                
+                <div class="skills-grid">
+                    
+                    <!-- LeetCode Profile -->
+                    <div class="skill-card">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="color: #ffa116; background: rgba(255, 161, 22, 0.1); padding: 12px; border-radius: 12px; border: 1px solid rgba(255, 161, 22, 0.3);">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 0;">LeetCode</h3>
+                                <a href="https://leetcode.com/NikleetCode" target="_blank" style="color: var(--accent); font-size: 0.85rem; font-family: var(--font-mono); text-decoration: none;">@NikleetCode ↗</a>
+                            </div>
+                        </div>
+                        <ul class="achievements-list" style="font-size: 0.9rem;">
+                            <li>Solved 837 problems, focusing heavily on intermediate and advanced logic with 620 Medium and 153 Hard completions.</li>
+                            <li>Maintained a Contest Rating of 1,594, ranking in the Top 24.58% globally.</li>
+                            <li>Awarded the 500 Days Badge for exceptional consistency and dedication.</li>
+                        </ul>
+                    </div>
+
+                    <!-- GeeksforGeeks Profile -->
+                    <div class="skill-card">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="color: #2f8d46; background: rgba(47, 141, 70, 0.1); padding: 12px; border-radius: 12px; border: 1px solid rgba(47, 141, 70, 0.3);">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 0;">GeeksforGeeks</h3>
+                                <a href="https://www.geeksforgeeks.org/profile/nikeshsuthar" target="_blank" style="color: var(--accent); font-size: 0.85rem; font-family: var(--font-mono); text-decoration: none;">@nikeshsuthar ↗</a>
+                            </div>
+                        </div>
+                        <ul class="achievements-list" style="font-size: 0.9rem;">
+                            <li>Solved 270 problems, including 183 Medium and 33 Hard challenges.</li>
+                            <li>Built a Coding Score of 881, backed by 77 Problem of the Day (POTD) solutions.</li>
+                            <li>Currently hold an Institute Rank of 24 at VESIT Mumbai.</li>
+                        </ul>
+                    </div>
+
+                    <!-- HackerEarth Profile -->
+                    <div class="skill-card">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="color: #6b7280; background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 0;">HackerEarth</h3>
+                                <a href="https://www.hackerearth.com/@nikesh63/" target="_blank" style="color: var(--accent); font-size: 0.85rem; font-family: var(--font-mono); text-decoration: none;">@nikesh63 ↗</a>
+                            </div>
+                        </div>
+                        <ul class="achievements-list" style="font-size: 0.9rem;">
+                            <li>Achieved a Top 1% ranking in both Data Structure and Basic Programming.</li>
+                            <li>Accumulated 3,000 Points and attained a Contest Rating of 1,385.</li>
+                            <li>Solved 207 problems with a total of 935 solutions submitted.</li>
+                        </ul>
+                    </div>
+                    <!-- CodeChef Profile -->
+                    <div class="skill-card">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="color: #8B4513; background: rgba(139, 69, 19, 0.1); padding: 12px; border-radius: 12px; border: 1px solid rgba(139, 69, 19, 0.3);">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                    <path d="M2 17l10 5 10-5"></path>
+                                    <path d="M2 12l10 5 10-5"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 0;">CodeChef</h3>
+                                <a href="https://www.codechef.com/users/nikesh_s" target="_blank" style="color: var(--accent); font-size: 0.85rem; font-family: var(--font-mono); text-decoration: none;">@nikesh_s ↗</a>
+                            </div>
+                        </div>
+                        <ul class="achievements-list" style="font-size: 0.9rem;">
+                            <li>Achieved a 3-Star Rating with a peak CodeChef rating of 1652 (Div 2).</li>
+                            <li>Secured a top Global Rank of 122 during the Starters 77 Division 3 contest.</li>
+                            <li>Earned the Contest Contender Bronze Badge and successfully solved 26 problems.</li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -451,7 +571,7 @@
                     <h3>Cloud & DevOps</h3>
                     <p style="color: var(--text-secondary); font-size: 0.9rem;">Infrastructure, containerization, and orchestration.</p>
                     <div class="skill-tags">
-                        <span class="tag">GCP</span><span class="tag">Docker</span><span class="tag">Kubernetes</span>
+                        <span class="tag">GCP</span><span class="tag">AWS</span><span class="tag">Docker</span><span class="tag">Kubernetes</span>
                     </div>
                 </div>
 
@@ -479,7 +599,7 @@
                         </div>
                         <span class="date">Jan 2024 - Present</span>
                     </div>
-                    <ul class="achievements">
+                    <ul class="achievements-list">
                         <li>Architected and implemented a high-throughput Kafka streaming pipeline processing 1.8TB/day to ingest Parquet-formatted files into Google Cloud Storage with exactly-once guarantees.</li>
                         <li>Owned the end-to-end implementation and scaling of gRPC-based reference data services, handling over 225,000 daily requests ensuring high availability.</li>
                         <li>Developed a scheduler service leveraging Spring AOP and batch processing to synchronize records to Alloy DB (PostgreSQL) with a max throughput of 13k records/sec.</li>
@@ -498,7 +618,7 @@
                         </div>
                         <span class="date">Jul 2021 - Jan 2024</span>
                     </div>
-                    <ul class="achievements">
+                    <ul class="achievements-list">
                         <li>Developed a scheduler service to fully automate End-of-Day (EOD) transaction settlement for loan booking, completely eliminating manual processing errors (100% reduction).</li>
                         <li>Integrated DocuSign into the client onboarding application, reducing document turnaround time by 93% (from 14 days to same-day completion).</li>
                         <li>Designed and implemented secure client authentication and authorization using OAuth 2.0, protecting REST APIs with token-based access control.</li>
@@ -508,9 +628,60 @@
             </div>
         </section>
 
-        <!-- PAGE 4: PROJECTS -->
+        <!-- PAGE 4: ACHIEVEMENTS & CERTIFICATIONS -->
+        <section id="achievements" class="page">
+            <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">04.</span> Awards & Certifications</h2>
+            
+            <div class="achievements-grid">
+                <div class="ach-card">
+                    <div class="ach-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+                    </div>
+                    <div class="ach-details">
+                        <h4>1st Place, CodeForGood Hackathon</h4>
+                        <p>Secured first place for developing an impactful tech solution.</p>
+                        <p style="color: var(--accent);">April 2020</p>
+                    </div>
+                </div>
+
+                <div class="ach-card">
+                    <div class="ach-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+                    </div>
+                    <div class="ach-details">
+                        <h4>Google Cloud Essential Training</h4>
+                        <p>Completed the GCP Essential Training for Developers.</p>
+                        <p style="color: var(--accent);">May 2026</p>
+                    </div>
+                </div>
+
+                <div class="ach-card">
+                    <div class="ach-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <div class="ach-details">
+                        <h4>AWS Cloud Practitioner</h4>
+                        <p>Earned official AWS Cloud Practitioner Certification.</p>
+                        <p style="color: var(--accent);">April 2023</p>
+                    </div>
+                </div>
+
+                <div class="ach-card">
+                    <div class="ach-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                    <div class="ach-details">
+                        <h4>Top 1% in CodeChef</h4>
+                        <p>Ranked 88th out of 10,075 participants in coding contest.</p>
+                        <p style="color: var(--accent);">Competitive Programming</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5: PROJECTS -->
         <section id="projects" class="page">
-            <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">04.</span> Featured Build</h2>
+            <h2><span style="color: var(--accent); font-family: var(--font-mono); font-size: 1.5rem;">05.</span> Featured Build</h2>
             
             <div class="project-card">
                 <div class="project-header">
@@ -524,7 +695,7 @@
                     An event-driven search platform that understands natural language, allowing users to search images using complex descriptions instead of strict keywords.
                 </p>
                 
-                <ul class="achievements" style="margin-bottom: 2rem;">
+                <ul class="achievements-list" style="margin-bottom: 2rem;">
                     <li>Built a Kafka pipeline to handle image uploads, instantly saving raw files to MinIO Object Storage to keep the main application fast.</li>
                     <li>Routed image data asynchronously to AI workers, which analyze the images using the CLIP model.</li>
                     <li>Saved embeddings into Qdrant (Vector Database) for smart, high-speed semantic search execution.</li>
